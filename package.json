@@ -1,0 +1,30 @@
+{
+  "name": "check-code-coverage",
+  "version": "1.0.0",
+  "description": "This GitHub action reads code coverage result and fail if the actual code coverage is below a specified threshold.",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "ncc build index.js -o dist --license licenses.txt",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/themichaelhall/check-code-coverage.git"
+  },
+  "keywords": [
+    "code",
+    "coverage",
+    "test",
+    "github",
+    "action"
+  ],
+  "author": "Michael Hall",
+  "homepage": "https://github.com/themichaelhall/check-code-coverage",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.27.0"
+  }
+}
