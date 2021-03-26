@@ -6,10 +6,14 @@ module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const core = __nccwpck_require__(127);
+const fileParsers = __nccwpck_require__(797);
 
-async function run() {
+function run() {
     try {
-        core.info("Hello world!");
+        const cloverFileParser = new fileParsers.CloverFileParser();
+        const result = cloverFileParser.parseFile('test/test.xml');
+
+        core.info("Code coverage is " + result.CodeCoveragePercentage + "%");
     } catch (error) {
         core.setFailed(error.message);
     }
@@ -410,6 +414,30 @@ function toCommandValue(input) {
 }
 exports.toCommandValue = toCommandValue;
 //# sourceMappingURL=utils.js.map
+
+/***/ }),
+
+/***/ 797:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+const fs = __nccwpck_require__(747);
+
+class CloverFileParser {
+    parseFile(filename) {
+        if (!fs.existsSync(filename)) {
+            throw new Error("Could not find file \"" + filename + "\"");
+        }
+
+        let codeCoveragePercentage = 50; // fixme: Actually calculate this value.
+
+        return {
+            CodeCoveragePercentage: codeCoveragePercentage,
+        };
+    }
+}
+
+exports.CloverFileParser = CloverFileParser;
+
 
 /***/ }),
 
