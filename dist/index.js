@@ -10,8 +10,9 @@ const fileParsers = __nccwpck_require__(350);
 
 function run() {
     try {
+        const coverageReport = core.getInput('coverage-report', {required: true});
         const cloverFileParser = new fileParsers.CloverFileParser();
-        const result = cloverFileParser.parseFile('test/test.xml');
+        const result = cloverFileParser.parseFile(coverageReport);
 
         core.info("Code coverage is " + result.CodeCoveragePercentage + "%");
     } catch (error) {

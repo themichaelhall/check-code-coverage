@@ -1,5 +1,9 @@
 name: 'Check code coverage'
-description: 'This GitHub action reads code coverage result and fail if the actual code coverage is below a specified threshold.'
+description: 'This GitHub action reads a code coverage report and fails if the actual code coverage is below a specified threshold.'
+inputs:
+  coverage-report:
+    description: 'The name of the code coverage report file'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'
