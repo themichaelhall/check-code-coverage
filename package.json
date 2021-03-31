@@ -22,7 +22,8 @@
   "homepage": "https://github.com/themichaelhall/check-code-coverage",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.2.6"
+    "@actions/core": "^1.2.6",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.27.0",
