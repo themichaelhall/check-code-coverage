@@ -7022,7 +7022,19 @@ class CloverFileParser {
             const projectNode = this.getParsedXmlNode(coverageNode, 'project');
             const metricsNode = this.getParsedXmlNode(projectNode, 'metrics');
 
-            let codeCoveragePercentage = 100; // fixme: Actually calculate this value.
+            // The following code is based on the formula for calculating clover coverage percentage found here:
+            // https://confluence.atlassian.com/clover/how-are-the-clover-coverage-percentages-calculated-79986990.html
+            const coveredConditionals = this.getParsedXmlIntegerAttribute(metricsNode, 'coveredconditionals');
+            const coveredStatements = this.getParsedXmlIntegerAttribute(metricsNode, 'coveredstatements');
+            const coveredMethods = this.getParsedXmlIntegerAttribute(metricsNode, 'coveredmethods');
+            const conditionals = this.getParsedXmlIntegerAttribute(metricsNode, 'conditionals');
+            const statements = this.getParsedXmlIntegerAttribute(metricsNode, 'statements');
+            const methods = this.getParsedXmlIntegerAttribute(metricsNode, 'methods');
+
+            const coveredSum = coveredConditionals + coveredStatements + coveredMethods;
+            const codeSum = conditionals + statements + methods;
+
+            const codeCoveragePercentage = codeSum > 0 ? Math.floor(100.0 * coveredSum / codeSum) : 0;
 
             return {
                 CodeCoveragePercentage: codeCoveragePercentage,
@@ -7079,6 +7091,31 @@ class CloverFileParser {
         }
 
         return content[nodeName];
+    }
+
+    /**
+     * Returns a node attribute from parsed XML.
+     *
+     * @private
+     *
+     * @param {Object} node
+     * @param {string} attributeName
+     *
+     * @return {number}
+     */
+    getParsedXmlIntegerAttribute(node, attributeName) {
+        const attributeValue = node['$'][attributeName];
+
+        if (typeof attributeValue === 'undefined') {
+            throw new Error('Metrics attribute "' + attributeName + '" is missing');
+        }
+
+        const attributeValueAsNumber = +attributeValue;
+        if (isNaN(attributeValueAsNumber)) {
+            throw new Error('Metrics attribute "' + attributeName + '" value "' + attributeValue + '" is not a number');
+        }
+
+        return attributeValueAsNumber;
     }
 }
 
