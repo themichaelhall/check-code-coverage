@@ -3,19 +3,19 @@ const application = require('../src/application');
 test('Run application with required coverage percentage parameter that is not a number', () => {
     expect(() => {
         new application.Application().run('./test/reports/clover-partial-coverage.xml', 'Foo');
-    }).toThrow('"required-coverage-percentage" parameter must be a number between 0 and 100');
+    }).toThrow('"required-percentage" parameter must be a number between 0 and 100');
 });
 
 test('Run application with required coverage percentage parameter below 0', () => {
     expect(() => {
         new application.Application().run('./test/reports/clover-partial-coverage.xml', '-1');
-    }).toThrow('"required-coverage-percentage" parameter must be a number between 0 and 100');
+    }).toThrow('"required-percentage" parameter must be a number between 0 and 100');
 });
 
 test('Run application with required coverage percentage parameter over 100', () => {
     expect(() => {
         new application.Application().run('./test/reports/clover-partial-coverage.xml', '100.5');
-    }).toThrow('"required-coverage-percentage" parameter must be a number between 0 and 100');
+    }).toThrow('"required-percentage" parameter must be a number between 0 and 100');
 });
 
 test('Run application with invalid report file', () => {

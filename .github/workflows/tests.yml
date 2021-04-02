@@ -24,5 +24,5 @@ jobs:
       - name: Checkception - Run action locally with its own coverage
         uses: ./
         with:
-          coverage-report: 'coverage/clover.xml'
-          required-coverage-percentage: 100
+          report: 'coverage/clover.xml'
+          required-percentage: 100
