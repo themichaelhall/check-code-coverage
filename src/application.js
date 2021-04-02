@@ -11,7 +11,14 @@ class Application {
      * @param {number} requiredCoveragePercentage
      */
     run(coverageReport, requiredCoveragePercentage) {
-        // fixme: validate parameters
+        if (typeof (coverageReport) !== 'string') {
+            throw new Error('"coverage-report" parameter must be a string');
+        }
+
+        if (typeof (requiredCoveragePercentage) !== 'number' || requiredCoveragePercentage < 0 || requiredCoveragePercentage > 100) {
+            throw new Error('"required-coverage-percentage" parameter must be a number between 0 and 100');
+        }
+
         const cloverFileParser = new fileParsers.CloverFileParser();
         const result = cloverFileParser.parseFile(coverageReport);
         const isSuccess = result.CodeCoveragePercentage >= requiredCoveragePercentage;
