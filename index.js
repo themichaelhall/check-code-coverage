@@ -4,7 +4,7 @@ const application = require('./src/application');
 try {
     const result = new application.Application().run(
         core.getInput('coverage-report', {required: true}),
-        50 // fixme: core.getInput
+        core.getInput('required-coverage-percentage', {required: true}),
     );
 
     result.isSuccess ?

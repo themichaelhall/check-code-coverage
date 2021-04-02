@@ -4,6 +4,9 @@ inputs:
   coverage-report:
     description: 'The name of the code coverage report file'
     required: true
+  required-coverage-percentage:
+    description: 'The code coverage in percent (0-100) required to pass'
+    required: true
 runs:
   using: 'node12'
   main: 'dist/index.js'

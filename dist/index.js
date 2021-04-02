@@ -11,7 +11,7 @@ const application = __nccwpck_require__(5432);
 try {
     const result = new application.Application().run(
         core.getInput('coverage-report', {required: true}),
-        50 // fixme: core.getInput
+        core.getInput('required-coverage-percentage', {required: true}),
     );
 
     result.isSuccess ?
@@ -7005,25 +7005,23 @@ class Application {
     /**
      * Run the application.
      *
-     * @param {string} coverageReport
-     * @param {number} requiredCoveragePercentage
+     * @param {string} coverageReport The "coverage-report" input value.
+     * @param {string} requiredCoveragePercentage The "required-coverage-percentage" input value.
      */
     run(coverageReport, requiredCoveragePercentage) {
-        if (typeof (coverageReport) !== 'string') {
-            throw new Error('"coverage-report" parameter must be a string');
-        }
+        const requiredCoveragePercentageAsInteger = +requiredCoveragePercentage;
 
-        if (typeof (requiredCoveragePercentage) !== 'number' || requiredCoveragePercentage < 0 || requiredCoveragePercentage > 100) {
+        if (isNaN(requiredCoveragePercentageAsInteger) || requiredCoveragePercentageAsInteger < 0 || requiredCoveragePercentageAsInteger > 100) {
             throw new Error('"required-coverage-percentage" parameter must be a number between 0 and 100');
         }
 
         const cloverFileParser = new fileParsers.CloverFileParser();
         const result = cloverFileParser.parseFile(coverageReport);
-        const isSuccess = result.CodeCoveragePercentage >= requiredCoveragePercentage;
+        const isSuccess = result.CodeCoveragePercentage >= requiredCoveragePercentageAsInteger;
 
         return {
             'isSuccess': isSuccess,
-            'message': 'Code coverage is ' + result.CodeCoveragePercentage + '%, required code coverage is ' + requiredCoveragePercentage + '%',
+            'message': 'Code coverage is ' + result.CodeCoveragePercentage + '%, required code coverage is ' + requiredCoveragePercentageAsInteger + '%',
         };
     }
 }

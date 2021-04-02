@@ -25,3 +25,4 @@ jobs:
         uses: ./
         with:
           coverage-report: 'coverage/clover.xml'
+          required-coverage-percentage: 100
