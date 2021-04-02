@@ -6,21 +6,21 @@ module.exports =
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
 
 const core = __nccwpck_require__(2810);
-const fileParsers = __nccwpck_require__(3350);
+const application = __nccwpck_require__(5432);
 
-function run() {
-    try {
-        const coverageReport = core.getInput('coverage-report', {required: true});
-        const cloverFileParser = new fileParsers.CloverFileParser();
-        const result = cloverFileParser.parseFile(coverageReport);
+try {
+    const result = new application.Application().run(
+        core.getInput('coverage-report', {required: true}),
+        50 // fixme: core.getInput
+    );
 
-        core.info("Code coverage is " + result.CodeCoveragePercentage + "%");
-    } catch (error) {
-        core.setFailed(error.message);
-    }
+    result.isSuccess ?
+        core.info(result.message) :
+        core.setFailed(result.message);
+
+} catch (error) {
+    core.setFailed(error.message);
 }
-
-run();
 
 
 /***/ }),
@@ -6989,6 +6989,46 @@ exports.toCommandValue = toCommandValue;
   module.exports.writerState = WriterState;
 
 }).call(this);
+
+
+/***/ }),
+
+/***/ 5432:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+const fileParsers = __nccwpck_require__(3350);
+
+/**
+ * Main application class.
+ */
+class Application {
+    /**
+     * Run the application.
+     *
+     * @param {string} coverageReport
+     * @param {number} requiredCoveragePercentage
+     */
+    run(coverageReport, requiredCoveragePercentage) {
+        if (typeof (coverageReport) !== 'string') {
+            throw new Error('"coverage-report" parameter must be a string');
+        }
+
+        if (typeof (requiredCoveragePercentage) !== 'number' || requiredCoveragePercentage < 0 || requiredCoveragePercentage > 100) {
+            throw new Error('"required-coverage-percentage" parameter must be a number between 0 and 100');
+        }
+
+        const cloverFileParser = new fileParsers.CloverFileParser();
+        const result = cloverFileParser.parseFile(coverageReport);
+        const isSuccess = result.CodeCoveragePercentage >= requiredCoveragePercentage;
+
+        return {
+            'isSuccess': isSuccess,
+            'message': 'Code coverage is ' + result.CodeCoveragePercentage + '%, required code coverage is ' + requiredCoveragePercentage + '%',
+        };
+    }
+}
+
+exports.Application = Application;
 
 
 /***/ }),
