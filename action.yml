@@ -1,5 +1,8 @@
 name: 'Check code coverage'
 description: 'This GitHub action reads a code coverage report and fails if the actual code coverage is below a specified threshold.'
+branding:
+  color: 'blue'
+  icon: 'layers'
 inputs:
   report:
     description: 'The name of the code coverage report file'
