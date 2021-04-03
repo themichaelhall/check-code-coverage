@@ -1,7 +1,7 @@
-const fileParsers = require('../src/fileParsers');
+const reportParsers = require('../src/reportParsers');
 
 test('Read clover code coverage from non-existing file', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
 
     expect(() => {
         cloverFileParser.parseFile('./test/reports/foo.xml');
@@ -9,7 +9,7 @@ test('Read clover code coverage from non-existing file', () => {
 });
 
 test('Read clover code coverage from an invalid file #1', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
 
     expect(() => {
         cloverFileParser.parseFile('./test/reports/clover-invalid-1.txt');
@@ -17,7 +17,7 @@ test('Read clover code coverage from an invalid file #1', () => {
 });
 
 test('Read clover code coverage from an invalid file #2', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
 
     expect(() => {
         cloverFileParser.parseFile('./test/reports/clover-invalid-2.xml');
@@ -25,7 +25,7 @@ test('Read clover code coverage from an invalid file #2', () => {
 });
 
 test('Read clover code coverage from an invalid file #3', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
 
     expect(() => {
         cloverFileParser.parseFile('./test/reports/clover-invalid-3.xml');
@@ -33,7 +33,7 @@ test('Read clover code coverage from an invalid file #3', () => {
 });
 
 test('Read clover code coverage from an invalid file #4', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
 
     expect(() => {
         cloverFileParser.parseFile('./test/reports/clover-invalid-4.xml');
@@ -41,28 +41,28 @@ test('Read clover code coverage from an invalid file #4', () => {
 });
 
 test('Read clover code coverage from a file with no code tested', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
     const result = cloverFileParser.parseFile('./test/reports/clover-no-code-tested.xml');
 
     expect(result.CodeCoveragePercentage).toBe(0);
 });
 
 test('Read clover code coverage from a file with no coverage', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
     const result = cloverFileParser.parseFile('./test/reports/clover-no-coverage.xml');
 
     expect(result.CodeCoveragePercentage).toBe(0);
 });
 
 test('Read clover code coverage from a file with partial coverage', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
     const result = cloverFileParser.parseFile('./test/reports/clover-partial-coverage.xml');
 
     expect(result.CodeCoveragePercentage).toBe(63);
 });
 
 test('Read clover code coverage from a file with full coverage', () => {
-    const cloverFileParser = new fileParsers.CloverFileParser();
+    const cloverFileParser = new reportParsers.CloverFileParser();
     const result = cloverFileParser.parseFile('./test/reports/clover-full-coverage.xml');
 
     expect(result.CodeCoveragePercentage).toBe(100);

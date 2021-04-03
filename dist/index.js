@@ -6996,7 +6996,7 @@ exports.toCommandValue = toCommandValue;
 /***/ 5432:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
-const fileParsers = __nccwpck_require__(3350);
+const reportParsers = __nccwpck_require__(354);
 
 /**
  * Main application class.
@@ -7015,7 +7015,7 @@ class Application {
             throw new Error('"required-percentage" parameter must be a number between 0 and 100');
         }
 
-        const cloverFileParser = new fileParsers.CloverFileParser();
+        const cloverFileParser = new reportParsers.CloverFileParser();
         const result = cloverFileParser.parseFile(coverageReport);
         const isSuccess = result.CodeCoveragePercentage >= requiredCoveragePercentageAsInteger;
 
@@ -7031,7 +7031,7 @@ exports.Application = Application;
 
 /***/ }),
 
-/***/ 3350:
+/***/ 354:
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 const fs = __nccwpck_require__(5747);

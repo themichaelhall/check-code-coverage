@@ -1,4 +1,4 @@
-const fileParsers = require('./fileParsers');
+const reportParsers = require('./reportParsers');
 
 /**
  * Main application class.
@@ -17,7 +17,7 @@ class Application {
             throw new Error('"required-percentage" parameter must be a number between 0 and 100');
         }
 
-        const cloverFileParser = new fileParsers.CloverFileParser();
+        const cloverFileParser = new reportParsers.CloverFileParser();
         const result = cloverFileParser.parseFile(coverageReport);
         const isSuccess = result.CodeCoveragePercentage >= requiredCoveragePercentageAsInteger;
 
