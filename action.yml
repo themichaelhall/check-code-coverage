@@ -11,5 +11,5 @@ inputs:
     description: 'The code coverage in percent (0-100) required to pass'
     required: true
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
