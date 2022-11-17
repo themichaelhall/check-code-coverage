@@ -17,7 +17,7 @@ This GitHub action reads a code coverage report and fails if the actual code cov
 ## Example usage
 
 ```yml
-uses: themichaelhall/check-code-coverage@v1
+uses: themichaelhall/check-code-coverage@v2
 with:
   report: coverage.xml
   required-percentage: 80
